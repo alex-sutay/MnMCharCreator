@@ -1,0 +1,181 @@
+!Advantages
+Accurate Attack
+All-out Attack
+Chokehold
+Close Attack
+Defensive Attack
+Defensive Roll
+Evasion Circumstance
+Fast Grab
+Favored Environment
+Grabbing Finesse
+Improved Aim
+Improved Critical
+Improved Defense
+Improved Disarm
+Improved Grab
+Improved Hold
+Improved Initiative
+Improved Smash
+Improved Trip
+Improvised Weapon
+Move-by Action
+Power Attack
+Precise Attack
+Prone Fighting
+Quick Draw
+Ranged Attack
+Redirect
+Set-up
+Takedown
+Throwing Mastery
+Uncanny Dodge
+Weapon Bind
+Weapon Break
+Beginner's Luck
+Inspire Spend
+Leadership
+Luck
+Seize Initiative
+Ultimate Effort
+Assessment
+Benefit
+Diehard
+Eidetic Memory
+Equipment
+Extraordinary Effort
+Fearless
+Great Endurance
+Instant Up
+Interpose
+Minion
+Second Chance
+Sidekick
+Teamwork
+Trance
+Agile Feint
+Animal Empathy
+Artificer
+Attractive
+Connected
+Contacts
+Daze
+Fascinate
+Favored Foe
+Hide in Plain Sight
+Improvised Tools
+Inventor
+Jack-of-all-trades
+Languages
+Ritualist
+Skill Mastery
+Startle
+Taunt
+Tracking
+Well-informed
+done
+
+!Modifiers
+Accurate;1;False
+Affects Corporeal;1;False
+Affects Insubstantial;1,2;False
+Affects Objects;0,1;True
+Affects Others;0,1;True
+Alternate Effect;1,2;False
+Alternate Resistance;0,1;True
+Area;1;True
+Attack;0;True
+Contagious;1;True
+Dimensional;1,3;False
+Extended Range;1;False
+Feature;1;False
+Homing;1;False
+Impervious;1;True
+Increased Duration;1;True
+Increased Mass;1;False
+Increased Range;1;True
+Incurable;1;False
+Indirect;1;False
+Innate;1;False
+Insidious;1;False
+Linked;0;False
+Multiattack;1;True
+Penetrating;1;False
+Precise;1;False
+Reach;1;False
+Reaction;1,3;True
+Reversible;1;False
+Ricochet;1;False
+Secondary Effect;1;True
+Selective;1;True
+Sleep;0;True
+Split;1;False
+Subtle;1,2;False
+Sustained;0;True
+Triggered;1;False
+Variable Descriptor;1,2;False
+Activation;-1,-2;False
+Check Required;-1;False
+Concentration;-1;True
+Diminished Range;-1;False
+Distracting;-1;True
+Fades;-1;True
+Feedback;-1;True
+Grab-Based;-1;True
+Increased Action;-1,-2,-3;True
+Limited;-1;True
+Noticeable;-1;False
+Permanent;-1;True
+Quirk;-1;False
+Reduced Range;-1,-2;True
+Resistible;-1;True
+Sense-Dependent;-1;True
+Side Effect;-1,-2;True
+Tiring;-1;True
+Uncontrolled;-1;True
+Unreliable;-1;True
+done
+
+!Powers
+Affliction;1;Alternate Resistance:0:True/Concentration:1:True/Extra Condition:1:True/Progressive:2:True/Instant Recovery:-1:True/Limited Degree:-1:True
+Burrowing;1;Penetrating:1:True/Ranged:1,2:True/Limited:-1:True
+Communication;4;Area:1:True/Dimensional:1:False/Rapid:1:False/Selective:1:True/Subtle:1,2:False/Limited:-1:True/Sense-Dependant:-1:True
+Comprehend;2;Type:-1,-2:True
+Concealment;2;Affects Others:1:True/Area:1:True/Attack:0:True/Precise:1:False/Blending:-1:True/Limited:-1:True/Partial:-1:True/Passive:-1:True/Resistible:-1:True
+Create;2;Continuous:1:True/Impervious:1:True/Innate:1:False/Movable:1:True/Precise:1:False/Selective:1:True/Stationary:0:True/Subtle:1,2:False/Tether:1:False/Feedback:-1:True/Proportional:-1:True
+Damage;1
+Deflect;1;Reflect:1:True/Redirect:1:True
+Elongation;1
+Environment;1,2;Selective:1:True
+Extra Limbs;1;Continuous:1:True/Projection:1:True/Sustained:0:True
+Feature;1
+Flight;2;Aquatic:1:False/Continuous:1:True/Subtle:1,2:False/Concentration:-1:True/Distracting:-1:True/Gliding:-1:True/Levitation:-1:True/Platform:-1:True/Wings:-1:True
+Growth;2;Permanent:0:True
+Healing;2;Action:1:True/Affects Objects:1:True/Area:1:True/Energizing:1:True/Perception:1:True/Persistent:1:False/Ranged:1:True/Restorative:1:True/Resurrection:1:True/Selective:1:True/Stabilize:1:False/Empathic:-1:True/Limited:-1:True/Temporary:-1:True
+Illusion;1,2,3,4,5;Independent:1:True/Selective:1:True/Feedback:-1:True/Limited to One Subject:-1:True/Ranged:-1:True/Resistible:-1:True
+Immortality;2;Limited:-1:True
+Immunity;1;Affects Others:1:True/Sustained:0:True/Ranged:1:True/Reflect:1:True/Redirect:1:True/Limited to Half Effect:-1:True
+Insubstantial;5;Affects Other:0,1:True/Attack:0,1:True/Continuous:1:True/Innate:1:False/Precise:1:False/Progressive:0:True/Reaction:1:True/Subtle:1,2:False/Absent Strength:-1:False/Permanent:0:True
+Leaping;1;Affects Others:0,1:True/Acrobatics Check Required:-1:True/Full Power:-1:True
+Luck Control;3;Area:1:True/Selective:1:True/Action:-1:True/Ranged:-1:True/Resistible:-1:True/Side Effects:-1,-2:True
+Mind Reading;2;Cumulative:1:True/Effortless:1:True/Sensory Link:1:True/Subtle:1,2:False/Close:-1:True/Feedback:-1:True/Limited by Language:-1:True/Limited to Emotions:-1:True/Limited to Sensory Link:-1:True/Limited to Surface Thoughts:-1:True/Ranged:-1:True/Sense-Dependent:-1:True
+Morph;5;Attack:0:True/Resistible:-1:True
+Move Object;2;Continuous:1:True/Damaging:1:True/Perception:1:True/Precise:1:False/Subtle:1:True/Close:-1:True/Concentration:-1:True/Limited Direction:-1:True/Limited Material:-1:True
+Movement;2
+Nullify;1;Alternate Resistance:0:True/Area:1:True/Broad:1:True/Concentration:1:True/Simultaneous:1:True/Effortless:1:True/Precise:1:False/Randomize:0:True/Selective:1:True/Sustained:1:True/Side Effect:-1:True
+Protection;1;Sustained:0:True
+Quickness;1;Limited to One Type:-1:True/Limited to One Task:-2:True
+Regeneration;1;Persistent:1:True/Source:-1:True
+Remote Sensing;1,2,3,4,5;No Conduit:1:True/Simultaneous:1:True/Subtle:1:True/Feedback:-1:True/Medium:-1:True/Noticeable:-1:False
+Senses;1;Affects Others:0,1:True/Area:1:True/Dimensional:1:True/Innate:1:False/Ranged:1,2:True/Limited:-1:True/Noticeable:-1:False/Unreliable:-1:True
+Shrinking;2;Atomic:1:False/Normal Strength:1:True
+Speed;1
+Summon;2;Active:1:True/Heroic:2:True/Horde:1:True/Mental Link:1:False/Multiple Minions:2:True/Sacrifice:1:True/Variable Type:1,2:True/Attitude:-1,-2:True/Resistible:-1:True
+Swimming;1
+Teleport;2;Accurate:1:True/Change Direction:1:False/Change Velocity:1:False/Easy:1:True/Extended:1:True/Portal:2:True/Turnabout:1:False/Limited to Extended:-1:True/Medium:-1:True
+Transform;2,3,4,5
+Variable;7;Action:1,2,3:True/Affects Others:0,1:True/Perception:1:True/Ranged:1:True/Limited:-1:True/Slow:-1:True
+Weaken;1;Affects Objects:0,1:True/Broad:1:True/Concentration:1:True/Incurable:1:False/Precise:1:False/Progressive:2:True/Selective:1:True/Simultaneous:1:True
+done
+
+exit
