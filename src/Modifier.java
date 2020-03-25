@@ -60,7 +60,6 @@ public class Modifier extends ModifierOpt implements Costly{
         if (isPer_rank()) {
             return cost * attached.get_rank();
         } else {
-            System.out.println(cost);
             return cost;
         }
     }
