@@ -115,6 +115,14 @@ public class Power extends PowerOpt implements Costly{
     }
 
     /**
+     * Method for setting the name
+     * @param name - the new name of the Power
+     */
+    public void set_name(String name) {
+        this.name = name;
+    }
+
+    /**
      * Gives a string for the save file format, which is:
      * name;title;rank;cost;mod1\mod2\mod3
      * @return String version of the power

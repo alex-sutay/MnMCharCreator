@@ -89,6 +89,14 @@ public class Character implements Costly {
     }
 
     /**
+     * Remove a power from this character
+     * @param name - the name of the Power being removed
+     */
+    public void remove_power(String name) {
+        powers.remove(name);
+    }
+
+    /**
      * Accessor for powers that this character has
      * @param title - the name of the power
      * @return - this character's Power with the given name

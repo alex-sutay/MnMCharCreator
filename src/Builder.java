@@ -369,6 +369,12 @@ public class Builder {
                     case "mod":
                         mod_power(cmdArray, in);
                         break;
+                    case "rename":
+                        rename_power(cmdArray, in);
+                        break;
+                    case "delete":
+                        rem_power(cmdArray);
+                        break;
                     default:
                         System.out.println("Unknown command. Try \"help\" for a list of commands.");
                         break;
@@ -386,11 +392,7 @@ public class Builder {
      * @param in - the Scanner needed to collect extra information
      */
     public void add_power(String[] cmdArray, Scanner in) {
-        String title = "";
-        for (int i = 1; i < cmdArray.length - 1; i++) {
-            title += cmdArray[i];
-        }
-        title += cmdArray[cmdArray.length - 1];
+        String title = add_spaces(cmdArray);
         if (power_opts.containsKey(title)) {
             System.out.print("What rank is the power?\n? ");
             int rank = Integer.parseInt(in.nextLine());
@@ -409,15 +411,7 @@ public class Builder {
      * @param in - a Scanner needed for collecting extra information
      */
     public void mod_power(String[] cmdArray, Scanner in) {
-        String title = "";
-        if (cmdArray.length > 2) {
-            for (int i = 1; i < cmdArray.length - 1; i++) {
-                title += cmdArray[i] + " ";
-            }
-            title += cmdArray[cmdArray.length - 1];
-        } else {
-            title = cmdArray[1];
-        }
+        String title = add_spaces(cmdArray);
         Power power = character.get_power(title);
         if (power == null) {
             System.out.println("Power \"" + title + "\" not found.");
@@ -432,6 +426,48 @@ public class Builder {
         Modifier mod = new Modifier(power.get_mod_opts().get(mod_name), power, in);
         power.add_mod(mod);
         character.add_power(title, power);
+    }
+
+    /**
+     * Rename a power attached to the character
+     * @param cmdArray - a String array representing the issued command
+     * @param in - a Scanner for obtaining extra information
+     */
+    public void rename_power(String[] cmdArray, Scanner in) {
+        String name = add_spaces(cmdArray);
+        Power power = character.get_power(name);
+        System.out.print("What is the new name for the power?\n? ");
+        String new_name = in.nextLine();
+        power.set_name(new_name);
+        character.remove_power(name);
+        character.add_power(new_name, power);
+    }
+
+    /**
+     * Remove a power from a character
+     * @param cmdArray - a String array representing the command
+     */
+    public void rem_power(String[] cmdArray) {
+        String name = add_spaces(cmdArray);
+        character.remove_power(name);
+    }
+
+    /**
+     * Adds spaces between the Strings in an array, skipping the first String
+     * @param array - the String array being put together
+     * @return String containing all Strings in the array, separated by spaces
+     */
+    private String add_spaces(String[] array) {
+        StringBuilder string = new StringBuilder();
+        if (array.length > 2) {
+            for (int i = 1; i < array.length - 1; i++) {
+                string.append(array[i]).append(" ");
+            }
+            string.append(array[array.length - 1]);
+        } else {
+            string = new StringBuilder(array[1]);
+        }
+        return string.toString();
     }
 
     private enum cmdType {DEFAULT, POWER}
@@ -454,7 +490,9 @@ public class Builder {
                 System.out.println("help: print this message\n" +
                         "quit: exit to primary command line\n" +
                         "add title: add a power. title is the name as given in the rules\n" +
-                        "mod name: add a modifier to a power. name is the name given to the power when you created it\n");
+                        "mod name: add a modifier to a power. name is the name given to the power when you created it\n" +
+                        "rename name: rename a power. name is the current name of the power\n" +
+                        "delete name: remove a power with the given name");
                 break;
         }
     }
