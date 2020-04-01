@@ -10,6 +10,9 @@ public class Power extends PowerOpt implements Costly{
     private int cost;
     private String name;
     private HashSet<Modifier> mods = new HashSet<>();
+    public enum PowerType {
+
+    }
 
     /**
      * The Constructor for building a new power from a PowerOpt of unknown cost
@@ -132,7 +135,7 @@ public class Power extends PowerOpt implements Costly{
         StringBuilder pow_str = new StringBuilder("Power;");
         pow_str.append(name).append(";").append(get_title()).append(";").append(rank).append(";").append(cost).append(";");
         for (Modifier mod : mods) {
-            pow_str.append(mod.toString()).append(";");
+            pow_str.append(mod.toString()).append("\\");
         }
         pow_str.setLength(pow_str.length() - 1);
         return pow_str.toString();

@@ -106,6 +106,14 @@ public class Character implements Costly {
     }
 
     /**
+     * Accessor for the skills
+     * @return - HashMap of the character's skills to scores
+     */
+    public HashMap<Skill, Integer> get_skills() {
+        return skills;
+    }
+
+    /**
      * Change the name of this character
      * @param name - the new name for this character
      */
@@ -119,6 +127,24 @@ public class Character implements Costly {
      */
     public String get_name() {
         return name;
+    }
+
+    /**
+     * Accessor for an attribute score
+     * @param att - the Attribute of the score
+     * @return the score associated with that attribute
+     */
+    public int get_attribute_score(Attribute att) {
+        return attributes.get(att);
+    }
+
+    /**
+     * Accessor for a defence score
+     * @param def - the Defence of the score
+     * @return the score associated with that attribute
+     */
+    public int get_defence_score(Defence def) {
+        return defences.get(def);
     }
 
     /**
@@ -137,7 +163,11 @@ public class Character implements Costly {
         }
         data.append("\nSkill scores:\n");
         for (Skill skill : skills.keySet()) {
-            data.append(skill).append(":  modifier - ").append(skills.get(skill)).append(", total - ").append(skills.get(skill) + attributes.get(skill.get_attribute())).append("\n");
+            if (!(skill.untrained) && skills.get(skill) == 0) {
+                data.append(skill).append(":  modifier - ").append(0).append(", total - ").append(0).append("\n");
+            } else {
+                data.append(skill).append(":  modifier - ").append(skills.get(skill)).append(", total - ").append(skills.get(skill) + attributes.get(skill.get_attribute())).append("\n");
+            }
         }
         data.append("\nAdvantages:\n");
         for (Advantage adv : advantages.keySet()) {
@@ -148,6 +178,41 @@ public class Character implements Costly {
             data.append(powers.get(power).printString()).append("\n");
         }
         return data.toString();
+    }
+
+    /**
+     * Get a nice String breaking down where the total cost comes from
+     * @return String containing a readable breakdown of where points are being spent
+     */
+    public String pointsString() {
+        StringBuilder costStr = new StringBuilder("Points spent:\n");
+        int cost = 0;
+        for (String power : powers.keySet()) {
+            cost += powers.get(power).get_cost();
+        }
+        costStr.append("Powers: ").append(cost).append("\n");
+        cost = 0;
+        for (Attribute attribute : attributes.keySet()) {
+            cost += 2 *attributes.get(attribute);
+        }
+        costStr.append("Attributes: ").append(cost).append("\n");
+        cost = 0;
+        for (Defence defence : defences.keySet()) {
+            cost += defences.get(defence);
+        }
+        costStr.append("Defences: ").append(cost).append("\n");
+        cost = 0;
+        for (Skill skill : skills.keySet()) {
+            cost += skills.get(skill) / 2;
+        }
+        costStr.append("Skills: ").append(cost).append("\n");
+        cost = 0;
+        for (Advantage advantage : advantages.keySet()) {
+            cost += advantages.get(advantage);
+        }
+        costStr.append("Advantages: ").append(cost).append("\n");
+        costStr.append("Total Cost: ").append(get_cost());
+        return costStr.toString();
     }
 
     /**
@@ -193,7 +258,7 @@ public class Character implements Costly {
             cost += defences.get(defence);
         }
         for (Skill skill : skills.keySet()) {
-            cost += skills.get(skill);
+            cost += skills.get(skill) / 2;
         }
         for (Advantage advantage : advantages.keySet()) {
             cost += advantages.get(advantage);

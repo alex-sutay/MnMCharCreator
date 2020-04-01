@@ -164,7 +164,7 @@ public class Builder {
         String[] line_array;
         String title;
         HashSet<Integer> cost_opt;
-        HashMap<String, ModifierOpt> mod_opts = default_mods;
+        HashMap<String, ModifierOpt> mod_opts = new HashMap<>(default_mods);
 
         while (true) {
             line = lines.remove(0).strip();
@@ -329,6 +329,9 @@ public class Builder {
                         name += cmdArray[cmdArray.length - 1];
                         character.set_name(name);
                         break;
+                    case "legal":
+                        System.out.println(legal_check(Integer.parseInt(cmdArray[1])));
+                        break;
                     case "quit":
                         cont = false;
                         break;
@@ -484,7 +487,8 @@ public class Builder {
                         "attribute name score: set the attribute with the given name to the given score\n" +
                         "defence name score: set the defence bonus with the given name to the given score\n" +
                         "skill name score: set the skill with the given name to the given score\n" +
-                        "advantage name score: add the advantage with the given name with the given score\n");
+                        "advantage name score: add the advantage with the given name with the given score\n" +
+                        "legal powerLevel: Check if the character is currently legal for the given power level");
                 break;
             case POWER:
                 System.out.println("help: print this message\n" +
@@ -560,5 +564,85 @@ public class Builder {
                 character.change_adv(adv, score);
             }
         }
+    }
+
+    /**
+     * Check if the character is legal
+     * @return - String output of all the tests
+     */
+    public String legal_check(int power_level) {
+        boolean pass = true;
+        StringBuilder result = new StringBuilder("Legality check for ");
+        result.append(character.get_name()).append(" at power level ").append(power_level).append(":\n");
+        //Test 1: Total Power Points
+        result.append("\nTotal Power Points:\n");
+        result.append(character.pointsString()).append("; ");
+        if (character.get_cost() <= 15 * power_level) {
+            result.append("PASS\n");
+            result.append("(remaining Power Points: ").append((15 * power_level) - character.get_cost()).append(")\n");
+        } else {
+            result.append("FAIL\n");
+            pass = false;
+        }
+        //Test 2: total modifier with skills is less than the power level +10
+        result.append("\nSkill Modifier:\n");
+        int cost;
+        HashMap<Skill, Integer> skills = character.get_skills();
+        for (Skill skill : skills.keySet()) {
+            cost = skills.get(skill);
+            cost += character.get_attribute_score(skill.get_attribute());
+            result.append(skill.toString()).append(": ").append(cost).append("; ");
+            if (cost <= power_level + 10) {
+                result.append("PASS\n");
+            } else {
+                result.append("FAIL\n");
+                pass = false;
+            }
+        }
+        //Test 3: Total of attack bonus and effect rank is less than twice the power level
+
+        //Test 4: Total of dodge and toughness is less than twice the power level
+        result.append("\nDodge & Toughness:\n");
+        int dodge = character.get_defence_score(Defence.DODGE) + character.get_attribute_score(Defence.DODGE.assoc);
+        int toughness = character.get_defence_score(Defence.TOUGHNESS) +character.get_attribute_score(Defence.TOUGHNESS.assoc);
+        result.append("Dodge: ").append(dodge).append(" + ");
+        result.append("Toughness: ").append(toughness).append(" = ").append(dodge + toughness).append("; ");
+        if (dodge + toughness <= power_level * 2) {
+            result.append("PASS\n");
+        } else {
+            result.append("FAIL\n");
+            pass = false;
+        }
+        //Test 5: Total of parry and toughness is less than twice the power level
+        result.append("\nParry & Toughness:\n");
+        int parry = character.get_defence_score(Defence.PARRY) +character.get_attribute_score(Defence.PARRY.assoc);
+        result.append("Parry: ").append(parry).append(" + ");
+        result.append("Toughness: ").append(toughness).append(" = ").append(parry + toughness).append("; ");
+        if (parry + toughness <= power_level * 2) {
+            result.append("PASS\n");
+        } else {
+            result.append("FAIL\n");
+            pass = false;
+        }
+        //Test 6: Total of Fortitude and will is less than twice the power level
+        result.append("\nFortitude & Will:\n");
+        int fortitude = character.get_defence_score(Defence.FORTITUDE) +character.get_attribute_score(Defence.FORTITUDE.assoc);
+        int will = character.get_defence_score(Defence.WILL) +character.get_attribute_score(Defence.WILL.assoc);
+        result.append("Fortitude: ").append(fortitude).append(" + ");
+        result.append("Will: ").append(will).append(" = ").append(fortitude + will).append("; ");
+        if (fortitude + will <= power_level * 2) {
+            result.append("PASS\n");
+        } else {
+            result.append("FAIL\n");
+            pass = false;
+        }
+
+        //Final results
+        if (pass) {
+            result.append("\nPassed all tests.");
+        } else {
+            result.append("\nFailed one or more tests.");
+        }
+        return result.toString();
     }
 }
