@@ -258,12 +258,10 @@ public class Builder {
 
     /**
      * save the current character to a file
-     * @param in - the Scanner used to get missing information from the user
+     * @param filename - the name of the file to save to
      */
-    public void save_char(Scanner in) {
+    public void save_char(String filename) {
         try {
-            System.out.print("What is the name of the file you'd like to write to?\n? ");
-            String filename = in.nextLine();
             filename = System.getProperty("user.dir") + "\\" + filename;
             FileWriter file = new FileWriter(filename);
             file.write(character.toString());
@@ -304,22 +302,53 @@ public class Builder {
                         power_cmd(in);
                         break;
                     case "attribute":
-                        update_att(cmdArray);
+                        if (cmdArray.length == 3) {
+                            int score = Integer.parseInt(cmdArray[2]);
+                            Attribute att = Attribute.valueOf(cmdArray[1].toUpperCase());
+                            update_att(att, score);
+                        } else {
+                            System.out.println("usage: attribute name score");
+                        }
                         break;
                     case "defence":
-                        update_def(cmdArray);
+                        if (cmdArray.length == 3) {
+                            int score = Integer.parseInt(cmdArray[2]);
+                            Defence def = Defence.valueOf(cmdArray[1].toUpperCase());
+                            update_def(def, score);
+                        } else {
+                            System.out.println("usage: attribute name score");
+                        }
                         break;
                     case "skill":
-                        update_skill(cmdArray);
+                        if (cmdArray.length == 3) {
+                            int score = Integer.parseInt(cmdArray[2]);
+                            Skill skill = Skill.valueOf(cmdArray[1].toUpperCase());
+                            update_skill(skill, score);
+                        } else {
+                            System.out.println("usage: attribute name score");
+                        }
                         break;
                     case "advantage":
-                        update_adv(cmdArray);
+                        if (cmdArray.length < 3) {
+                            System.out.println("usage: advantage name score");
+                        } else {
+                            int score = Integer.parseInt(cmdArray[cmdArray.length - 1]);
+                            StringBuilder title = new StringBuilder();
+                            for (int i = 1; i < cmdArray.length - 2; i++) {
+                                title.append(cmdArray[i]).append(" ");
+                            }
+                            title.append(cmdArray[cmdArray.length - 2]);
+                            Advantage adv = advantages.get(title.toString());
+                            update_adv(adv, score);
+                        }
                         break;
                     case "print":
                         System.out.println(character.printString());
                         break;
                     case "save":
-                        save_char(in);
+                        System.out.print("What is the name of the file you'd like to write to?\n? ");
+                        String filename = in.nextLine();
+                        save_char(filename);
                         break;
                     case "name":
                         String name = "";
@@ -367,16 +396,16 @@ public class Builder {
                         cont = false;
                         break;
                     case "add":
-                        add_power(cmdArray, in);
+                        add_power(add_spaces(cmdArray), in);
                         break;
                     case "mod":
-                        mod_power(cmdArray, in);
+                        mod_power(add_spaces(cmdArray), in);
                         break;
                     case "rename":
-                        rename_power(cmdArray, in);
+                        rename_power(add_spaces(cmdArray), in);
                         break;
                     case "delete":
-                        rem_power(cmdArray);
+                        rem_power(add_spaces(cmdArray));
                         break;
                     default:
                         System.out.println("Unknown command. Try \"help\" for a list of commands.");
@@ -391,11 +420,10 @@ public class Builder {
 
     /**
      * Add a power to the current character
-     * @param cmdArray - the String array representing the command issued to generate this power
+     * @param title - the title of the power
      * @param in - the Scanner needed to collect extra information
      */
-    public void add_power(String[] cmdArray, Scanner in) {
-        String title = add_spaces(cmdArray);
+    public void add_power(String title, Scanner in) {
         if (power_opts.containsKey(title)) {
             System.out.print("What rank is the power?\n? ");
             int rank = Integer.parseInt(in.nextLine());
@@ -410,11 +438,10 @@ public class Builder {
 
     /**
      * Modify a power attached to a character
-     * @param cmdArray - a String array representing the command issued
+     * @param title - the title of the Modifier being added
      * @param in - a Scanner needed for collecting extra information
      */
-    public void mod_power(String[] cmdArray, Scanner in) {
-        String title = add_spaces(cmdArray);
+    public void mod_power(String title, Scanner in) {
         Power power = character.get_power(title);
         if (power == null) {
             System.out.println("Power \"" + title + "\" not found.");
@@ -433,11 +460,10 @@ public class Builder {
 
     /**
      * Rename a power attached to the character
-     * @param cmdArray - a String array representing the issued command
+     * @param name - the given name of the power
      * @param in - a Scanner for obtaining extra information
      */
-    public void rename_power(String[] cmdArray, Scanner in) {
-        String name = add_spaces(cmdArray);
+    public void rename_power(String name, Scanner in) {
         Power power = character.get_power(name);
         System.out.print("What is the new name for the power?\n? ");
         String new_name = in.nextLine();
@@ -448,10 +474,9 @@ public class Builder {
 
     /**
      * Remove a power from a character
-     * @param cmdArray - a String array representing the command
+     * @param name - the given name of the power being removed
      */
-    public void rem_power(String[] cmdArray) {
-        String name = add_spaces(cmdArray);
+    public void rem_power(String name) {
         character.remove_power(name);
     }
 
@@ -503,66 +528,41 @@ public class Builder {
 
     /**
      * update an attribute of the character
-     * @param cmdArray - the String array representing the command
+     * @param att - the attribute being updated
+     * @param score - the new score for the given attribute
      */
-    public void update_att(String[] cmdArray) {
-        if (cmdArray.length == 3) {
-            int score = Integer.parseInt(cmdArray[2]);
-            Attribute att = Attribute.valueOf(cmdArray[1].toUpperCase());
-            character.change_att(att, score);
-        } else {
-            System.out.println("usage: attribute name score");
-        }
+    public void update_att(Attribute att, int score) {
+        character.change_att(att, score);
     }
 
     /**
      * update a defence of the character
-     * @param cmdArray - the String array representing the issued command
+     * @param def - the defence being updated
+     * @param score - the new score for that defence
      */
-    public void update_def(String[] cmdArray) {
-        if (cmdArray.length == 3) {
-            int score = Integer.parseInt(cmdArray[2]);
-            Defence def = Defence.valueOf(cmdArray[1].toUpperCase());
-            character.change_def(def, score);
-        } else {
-            System.out.println("usage: attribute name score");
-        }
+    public void update_def(Defence def, int score) {
+        character.change_def(def, score);
     }
 
     /**
      * Update a skill of the character
-     * @param cmdArray - a String array representing the issued command
+     * @param skill - the skill being updated
+     * @param score - the new score for the skill
      */
-    public void update_skill(String[] cmdArray) {
-        if (cmdArray.length == 3) {
-            int score = Integer.parseInt(cmdArray[2]);
-            Skill skill = Skill.valueOf(cmdArray[1].toUpperCase());
-            character.change_skill(skill, score);
-        } else {
-            System.out.println("usage: skill name score");
-        }
+    public void update_skill(Skill skill, int score) {
+        character.change_skill(skill, score);
     }
 
     /**
      * Update an advantage of the character
-     * @param cmdArray- a String array representing the issued command
+     * @param adv - the advantage being updated
+     * @param score - the new score for that advantage
      */
-    public void update_adv(String[] cmdArray) {
-        if (cmdArray.length < 3) {
-            System.out.println("usage: advantage name score");
+    public void update_adv(Advantage adv, int score) {
+        if (adv == null) {
+            System.out.println("Advantage not found.");
         } else {
-            int score = Integer.parseInt(cmdArray[cmdArray.length - 1]);
-            StringBuilder title = new StringBuilder();
-            for (int i = 1; i < cmdArray.length - 2; i++) {
-                title.append(cmdArray[i]).append(" ");
-            }
-            title.append(cmdArray[cmdArray.length - 2]);
-            Advantage adv = advantages.get(title.toString());
-            if (adv == null) {
-                System.out.println("Advantage \"" + title + "\" not found.");
-            } else {
-                character.change_adv(adv, score);
-            }
+            character.change_adv(adv, score);
         }
     }
 
