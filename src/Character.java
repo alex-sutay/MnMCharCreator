@@ -257,9 +257,11 @@ public class Character implements Costly {
         for (Defence defence : defences.keySet()) {
             cost += defences.get(defence);
         }
+        int skillcost = 0;
         for (Skill skill : skills.keySet()) {
-            cost += skills.get(skill) / 2;
+            skillcost += skills.get(skill);
         }
+        cost += skillcost;
         for (Advantage advantage : advantages.keySet()) {
             cost += advantages.get(advantage);
         }
