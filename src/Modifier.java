@@ -57,7 +57,6 @@ public class Modifier extends ModifierOpt implements Costly{
      */
     @Override
     public long get_cost() {
-        System.out.println(get_title() + ": " + isPer_rank());
         if (isPer_rank()) {
             return cost * attached.get_rank();
         } else {
