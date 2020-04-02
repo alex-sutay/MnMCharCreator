@@ -222,7 +222,9 @@ public class Character implements Costly {
     @Override
     public String toString() {
         StringBuilder char_str = new StringBuilder("name;");
-        char_str.append(name).append("\n");
+        if (!(name.equals(""))) {
+            char_str.append(name).append("\n");
+        }
         for (Attribute att : attributes.keySet()) {
             char_str.append("Attribute;").append(att.toString()).append(";").append(attributes.get(att)).append("\n");
         }
@@ -261,7 +263,7 @@ public class Character implements Costly {
         for (Skill skill : skills.keySet()) {
             skillcost += skills.get(skill);
         }
-        cost += skillcost;
+        cost += skillcost / 2;
         for (Advantage advantage : advantages.keySet()) {
             cost += advantages.get(advantage);
         }
