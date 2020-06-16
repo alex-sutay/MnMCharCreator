@@ -203,8 +203,9 @@ public class Character implements Costly {
         costStr.append("Defences: ").append(cost).append("\n");
         cost = 0;
         for (Skill skill : skills.keySet()) {
-            cost += skills.get(skill) / 2;
+            cost += skills.get(skill);
         }
+        cost = cost/2;
         costStr.append("Skills: ").append(cost).append("\n");
         cost = 0;
         for (Advantage advantage : advantages.keySet()) {
@@ -221,10 +222,11 @@ public class Character implements Costly {
      */
     @Override
     public String toString() {
-        StringBuilder char_str = new StringBuilder("name;");
+        StringBuilder char_str = new StringBuilder();
         if (!(name.equals(""))) {
-            char_str.append(name).append("\n");
+            char_str.append("name;").append(name);
         }
+        char_str.append("\n");
         for (Attribute att : attributes.keySet()) {
             char_str.append("Attribute;").append(att.toString()).append(";").append(attributes.get(att)).append("\n");
         }
