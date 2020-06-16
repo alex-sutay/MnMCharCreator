@@ -6,6 +6,7 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.application.Application;
 
+
 public class BuilderGui extends Application{
     Builder builder;
 
@@ -17,7 +18,7 @@ public class BuilderGui extends Application{
     @Override
     public void init() throws Exception {
         super.init();
-        builder = new Builder();
+        builder = new Builder(getParameters().getUnnamed().get(0));
         System.out.println( "init called." );
     }
 
@@ -180,8 +181,7 @@ public class BuilderGui extends Application{
             combInfo.getChildren().addAll(lcenter, rcenter);
 
             // The bottom section of the first page
-            Button powerInfo = new Button("3");
-            powerInfo.setOpacity(0.5);
+            AbilityList powerInfo = new AbilityList(builder.power_opts.keySet(), builder.default_mods.keySet());
             powerInfo.setPrefSize(850, 480);
 
             page1.getChildren().addAll(charInfo, combInfo, powerInfo);
@@ -197,7 +197,9 @@ public class BuilderGui extends Application{
             VBox leftSide = new VBox();
             leftSide.setSpacing(10);
             leftSide.getChildren().add(spaceFiller(450, 120));
-            leftSide.getChildren().add(spaceFiller(450, 250));
+            AbilityList advantages = new AbilityList(builder.advantages.keySet());
+            advantages.setPrefSize(450, 250);
+            leftSide.getChildren().add(advantages);
             TextArea complications = new TextArea();
             complications.setPrefSize(450, 245);
             leftSide.getChildren().add(complications);
@@ -273,7 +275,7 @@ public class BuilderGui extends Application{
             skills.setLeft(skillNames);
             GridPane skillScores = new GridPane(); // Scores section
             skillScores.setPrefSize(230, 870);
-            skillScores.setPadding(new Insets(10));
+            skillScores.setPadding(new Insets(10)); 
             skillScores.setHgap(10);
             skillScores.setVgap(7);
             for (int r = 0; r < 23; r++) {
