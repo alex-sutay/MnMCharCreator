@@ -13,9 +13,18 @@ public class Builder {
     HashMap<String, ModifierOpt> default_mods;
 
     /**
-     * The basic constructor for a builder. Doesn't do anything.
+     * The basic constructor for a builder. Loads in the data using a given filename
+     * @param filename - the name of a file used to load in data
      */
-    public Builder() {}
+    public Builder(String filename) {
+        try {
+            load_data(filename);
+        } catch (Exception e) {
+            System.out.println("Something went wrong while trying to load the data\n" + e);
+            e.printStackTrace();
+            System.exit(1);
+        }
+    }
 
     /**
      * This function will instantiate a Builder, load in a datafile, and start the commandline
@@ -23,14 +32,7 @@ public class Builder {
      */
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
-        Builder builder = new Builder();
-        try {
-            builder.load_data(args[0]);
-        } catch (Exception e) {
-            System.out.println("Something went wrong while trying to load the data\n" + e);
-            e.printStackTrace();
-            System.exit(1);
-        }
+        Builder builder = new Builder(args[0]);
         System.out.print("Would you like to load a character? [y/n]\n> ");
         String resp = in.nextLine();
         while (!resp.equals("y") && !resp.equals("n")) {
@@ -85,6 +87,7 @@ public class Builder {
             System.out.println("Loaded " + power_opts.size() + " powers, and all other data");
         } else {
             System.out.println("Data file not found");
+            throw new FileNotFoundException();
         }
     }
 
@@ -310,7 +313,7 @@ public class Builder {
                             System.out.println("usage: attribute name score");
                         }
                         break;
-                    case "defence":
+                    case "defense":
                         if (cmdArray.length == 3) {
                             int score = Integer.parseInt(cmdArray[2]);
                             Defence def = Defence.valueOf(cmdArray[1].toUpperCase());
@@ -510,7 +513,7 @@ public class Builder {
                         "quit: exit the command line\n" +
                         "power: Edit the powers\n" +
                         "attribute name score: set the attribute with the given name to the given score\n" +
-                        "defence name score: set the defence bonus with the given name to the given score\n" +
+                        "defense name score: set the defence bonus with the given name to the given score\n" +
                         "skill name score: set the skill with the given name to the given score\n" +
                         "advantage name score: add the advantage with the given name with the given score\n" +
                         "legal powerLevel: Check if the character is currently legal for the given power level");
