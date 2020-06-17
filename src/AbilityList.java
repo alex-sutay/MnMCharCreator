@@ -4,6 +4,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
+import java.util.HashMap;
 import java.util.Set;
 
 public class AbilityList extends VBox {
@@ -13,6 +14,7 @@ public class AbilityList extends VBox {
     private final Set<String> choices;
     private Set<String> modifiers;
     private final GridPane abilities = new GridPane();
+    private HashMap<Integer, Integer> modslot = new HashMap<>();
 
     public AbilityList(Set<String> abilities, Set<String> modifiers) {
         this(abilities);
@@ -44,6 +46,7 @@ public class AbilityList extends VBox {
             Button addMod = new Button("Add Modifier");
             addMod.setOnMouseClicked(event -> addModifier(thisRow));
             abilities.add(addMod, 3, thisRow);
+            modslot.put(thisRow, 4);
         }
         nextRow += 1;
     }
@@ -58,6 +61,10 @@ public class AbilityList extends VBox {
     }
 
     private void addModifier(int row) {
-        // bruh idk figure this out later
+        int thisSlot = modslot.get(row);
+        ComboBox<String> comboBox = new ComboBox<>();
+        comboBox.getItems().addAll(modifiers);
+        abilities.add(comboBox, thisSlot, row);
+        modslot.put(row, thisSlot+1);
     }
 }
