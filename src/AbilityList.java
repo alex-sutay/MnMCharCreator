@@ -16,12 +16,21 @@ public class AbilityList extends VBox {
     private final GridPane abilities = new GridPane();
     private HashMap<Integer, Integer> modslot = new HashMap<>();
 
+    /**
+     * Constructor for a list that has modifiers
+     * @param abilities - the Set of ability options
+     * @param modifiers - the Set of modifier options
+     */
     public AbilityList(Set<String> abilities, Set<String> modifiers) {
         this(abilities);
         modable = true;
         this.modifiers = modifiers;
     }
 
+    /**
+     * Constructor for a list without modifiers
+     * @param choices - the Set of ability options
+     */
     public AbilityList(Set<String> choices) {
         super();
         this.choices = choices;
@@ -32,6 +41,9 @@ public class AbilityList extends VBox {
         this.getChildren().add(button);
     }
 
+    /**
+     * The function to add a power
+     */
     private void addRow() {
         int thisRow = nextRow;
         TextField name = new TextField("New");
@@ -51,6 +63,10 @@ public class AbilityList extends VBox {
         nextRow += 1;
     }
 
+    /**
+     * The function to remove a power
+     * @param row - the row number of the power being removed
+     */
     private void removeRow(int row) {
         if (row == 0) {
             abilities.getChildren().removeIf
@@ -60,6 +76,10 @@ public class AbilityList extends VBox {
         }
     }
 
+    /**
+     * The method to add a modifier
+     * @param row - the row number of the power being modified
+     */
     private void addModifier(int row) {
         int thisSlot = modslot.get(row);
         ComboBox<String> comboBox = new ComboBox<>();
